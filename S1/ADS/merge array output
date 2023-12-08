@@ -1,0 +1,11 @@
+Enter the size of array a:2
+Enter array elements:3
+5
+Enter size of array b:3
+Enter array elements:1
+5
+7
+
+ Array a:3	5	
+ Array b:1	5	7	
+ Array c:1	3	5	5	7	
