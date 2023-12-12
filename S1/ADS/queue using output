@@ -1,0 +1,35 @@
+Queue using Array
+1.Insertion 
+2.Deletion 
+3.Display 
+4.Exit
+Enter the Choice:1
+
+ Enter no 1:2
+
+Enter the Choice:1
+
+ Enter no 2:4
+
+Enter the Choice:1
+
+ Enter no 3:5
+
+Enter the Choice:3
+
+Queue Elements are:
+2
+4
+5
+
+Enter the Choice:2
+
+ Deleted Element is 2
+Enter the Choice:3
+
+Queue Elements are:
+4
+5
+
+Enter the Choice:4
+
