@@ -1,16 +1,17 @@
 import json
+
 data={
-	"name":"john",
-	"age":30,
-	"city":"New York"
+     "name":"John",
+     "age":30,
+     "city":"New York"
 }
-json_data=json.dumps(data,indent=4)
-print("JSON Data:")
-print(json_data)
-json_string='{"name":"Alice","age":25,"city":"London"}'
-parsed_data=json.loads(json_string)
-print("parsed Data:")
-print(parsed_data)
-json_string='{"name":"Alice","age":25,"city":"London")'
-parsed_data=json.loads(json_string)
-print("parsed Data:",parsed_data)
+
+jsonData=json.dumps(data,indent=4)
+print("JSON DATA:")
+print(jsonData)
+
+jsonString='{"name":"Alice","age":25,"city":"London"}'
+parsedData=json.loads(jsonString)
+
+print("Parsed Data:")
+print(parsedData)
