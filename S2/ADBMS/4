@@ -1,0 +1,75 @@
+student@student-OptiPlex-390:~$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database prgm4;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> use prgm4;
+Database changed
+mysql> create table prgm4(rollno int,name varchar(20),course varchar(20));
+Query OK, 0 rows affected (0.66 sec)
+
+mysql> insert into prgm4 values(1,'brian','MCA');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into prgm4 values(2,'binoj','MCA');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> savepoint a;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into prgm4 values(3,'nissam','MCA');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from prgm4;
++--------+--------+--------+
+| rollno | name   | course |
++--------+--------+--------+
+|      1 | brian  | MCA    |
+|      2 | binoj  | MCA    |
+|      3 | nissam | MCA    |
++--------+--------+--------+
+3 rows in set (0.00 sec)
+
+mysql> rollback to a;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from prgm4;
++--------+-------+--------+
+| rollno | name  | course |
++--------+-------+--------+
+|      1 | brian | MCA    |
+|      2 | binoj | MCA    |
++--------+-------+--------+
+2 rows in set (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into prgm4 values(4,'ali','MCA');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from prgm4;
++--------+-------+--------+
+| rollno | name  | course |
++--------+-------+--------+
+|      1 | brian | MCA    |
+|      2 | binoj | MCA    |
+|      4 | ali   | MCA    |
++--------+-------+--------+
+3 rows in set (0.00 sec)
+
