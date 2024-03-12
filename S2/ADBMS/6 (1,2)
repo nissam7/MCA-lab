@@ -1,0 +1,194 @@
+student@student-OptiPlex-390:~$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 3
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database salesman;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> use salesman;
+Database changed
+mysql> create table salesman(salesman_id int,Name varchar(30),city varchar(30),commission float(30));
+Query OK, 0 rows affected (0.35 sec)
+
+mysql> desc salesman;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| salesman_id | int(11)     | YES  |     | NULL    |       |
+| Name        | varchar(30) | YES  |     | NULL    |       |
+| city        | varchar(30) | YES  |     | NULL    |       |
+| commission  | double      | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> desc salesman;^C
+mysql> insert into salesman values(5001,'james hoog','new york','0.15');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into salesman values(5002,'Nail knite','paris','0.13');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into salesman values(5005,'pit Alex','London','0.11');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into salesman values(5006,'Mc Lyon','paris','0.14');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into salesman values(5007,'Paul Adam','Rome','0.13');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into salesman values(5003,'Lauson Hen','san jose','0.12');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> create view newyorkstaff as select * from salesman where city='new york';
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from newyorkstaff;
++-------------+------------+----------+------------+
+| salesman_id | Name       | city     | commission |
++-------------+------------+----------+------------+
+|        5001 | james hoog | new york |       0.15 |
++-------------+------------+----------+------------+
+1 row in set (0.02 sec)
+
+mysql> create table customer(customer_id int,cust_name varchar(30),city varchar(30),grade int,salesman_id int);
+Query OK, 0 rows affected (0.26 sec)
+
+mysql> insert into customer('3002','Nick Rimando','New york',100,5001);
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''3002','Nick Rimando','New york',100,5001)' at line 1
+mysql> insert into customer values('3002','Nick Rimando','New york',100,5001);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into customer values('3007','brad davis','New york',200,5001);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into customer values('3005','graham zusi','california',200,5002);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into customer values('3008','julian green','lodon',300,5002);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into customer values('3004','febian johnson','paris',300,5006);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into customer values('3009','geoff cameron','berlin',100,5003);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into customer values('3003','jozy altidor','moscow',200,5007);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into customer values('3001','brad guzan','london',100,5005);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> alter table salesman add primary key(salesman_id);
+Query OK, 0 rows affected (0.80 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table customer add foreign key(salesman_id) references salesman(salesman_id);
+Query OK, 8 rows affected (0.84 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> create view gradecount(grade,number)as select grade,count(*) from customer group by grade;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> select * from gradecount;
++-------+--------+
+| grade | number |
++-------+--------+
+|   100 |      3 |
+|   200 |      3 |
+|   300 |      2 |
++-------+--------+
+3 rows in set (0.06 sec)
+
+mysql> select * from customer;
++-------------+----------------+------------+-------+-------------+
+| customer_id | cust_name      | city       | grade | salesman_id |
++-------------+----------------+------------+-------+-------------+
+|        3002 | Nick Rimando   | New york   |   100 |        5001 |
+|        3007 | brad davis     | New york   |   200 |        5001 |
+|        3005 | graham zusi    | california |   200 |        5002 |
+|        3008 | julian green   | lodon      |   300 |        5002 |
+|        3004 | febian johnson | paris      |   300 |        5006 |
+|        3009 | geoff cameron  | berlin     |   100 |        5003 |
+|        3003 | jozy altidor   | moscow     |   200 |        5007 |
+|        3001 | brad guzan     | london     |   100 |        5005 |
++-------------+----------------+------------+-------+-------------+
+8 rows in set (0.00 sec)
+
+mysql> create table orders(ord_no int primary key,purch_amt float,ord_date date,customer_id int,salesman_id int);
+Query OK, 0 rows affected (0.38 sec)
+
+mysql> alter table orders add foreign key(salesman_id) references salesman(salesman_id);
+Query OK, 0 rows affected (0.70 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| customer_id | int(11)     | YES  |     | NULL    |       |
+| cust_name   | varchar(30) | YES  |     | NULL    |       |
+| city        | varchar(30) | YES  |     | NULL    |       |
+| grade       | int(11)     | YES  |     | NULL    |       |
+| salesman_id | int(11)     | YES  | MUL | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table customer add primary key(customer_id);
+Query OK, 0 rows affected (0.74 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table orders add foreign key(customer_id) references customer(customer_id);
+Query OK, 0 rows affected (0.68 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into orders values(7001,150.5,'2012-10-05',3005,5002);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into orders values(7009,270.65,'2012-09-10',3001,5005);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into orders values(7002,65.26,'2012-10-05',3002,5001);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into orders values(7004,110.5,'2012-08-17',3009,5003);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> create view sorder as select salesman_id,ord_no,customer_id from orders where ord_date in('2012-08-17','2012-10-10');
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from sorder;
++-------------+--------+-------------+
+| salesman_id | ord_no | customer_id |
++-------------+--------+-------------+
+|        5003 |   7004 |        3009 |
++-------------+--------+-------------+
+1 row in set (0.00 sec)
+
+mysql> CREATE VIEW elitsalesman AS SELECT b.ord_date, a.salesman_id, a.name FROM salesman a, orders b WHERE a.salesman_id = b.salesman_id AND b.purch_amt=(SELECT MAX(purch_amt) FROM orders c WHERE c.ord_date = b.ord_date);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from elitsalesman;
++------------+-------------+------------+
+| ord_date   | salesman_id | name       |
++------------+-------------+------------+
+| 2012-10-05 |        5002 | Nail knite |
+| 2012-08-17 |        5003 | Lauson Hen |
+| 2012-09-10 |        5005 | pit Alex   |
++------------+-------------+------------+
+3 rows in set (0.01 sec)
+
+mysql> 
+
