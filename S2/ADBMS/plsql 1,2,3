@@ -1,0 +1,82 @@
+student@student-OptiPlex-390:~$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 7
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use MCA29;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> delimiter //
+mysql> create procedure display()
+    -> begin
+    -> select * from student;
+    -> end
+    -> //
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> delimiter ;
+mysql> call display();
++-------+--------+--------+------+
+| REGNO | NAME   | COURSE | YEAR |
++-------+--------+--------+------+
+|     1 | NISSAM | BCA    | 2022 |
+|     3 | ALI    | BBA    | 2022 |
+|     6 | BINOJ  | BSC    | 2022 |
++-------+--------+--------+------+
+3 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> DELIMITER //
+mysql> CREATE PROCEDURE `sum`(IN a INT, IN b INT)
+    -> BEGIN
+    -> DECLARE c INT;
+    -> SET c = a + b;
+    -> SELECT CONCAT('Sum of two numbers = ', c) AS Result;
+    -> END //
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter ;
+mysql> CALL `sum`(5, 10);
++-------------------------+
+| Result                  |
++-------------------------+
+| Sum of two numbers = 15 |
++-------------------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> DELIMITER //
+mysql> CREATE PROCEDURE CheckOddOrEven(IN input_number INT)
+    -> BEGIN
+    -> IF MOD(input_number, 2) = 0 THEN
+    -> SELECT 'Even' AS result;
+    -> ELSE
+    -> SELECT 'Odd' AS result;
+    -> END IF;
+    -> END //
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter ;
+mysql> call CheckOddOrEven(2);
++--------+
+| result |
++--------+
+| Even   |
++--------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
