@@ -1,0 +1,43 @@
+student@student-OptiPlex-390:~$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 5
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use MCA29;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> Delimiter //
+mysql> create procedure factorial(in a int)
+    -> begin
+    -> declare f int default 1;
+    -> while a>0 do
+    -> set f=f*a;
+    -> set a=a-1;
+    -> end while;
+    -> select concat('factorial=',f)as result;
+    -> end //
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> delimiter ;
+mysql> call factorial(6);
++---------------+
+| result        |
++---------------+
+| factorial=720 |
++---------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
