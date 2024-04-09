@@ -1,0 +1,276 @@
+mysql> create table EMPLOYEE(emp_id int(20) primary key,emp_name varchar(50) not null,emp_add varchar(50) not null,emp_phone varchar(50) not null,dept_id varchar(50) not null,dept_name varchar(50) not null,salary int(50) not null);
+Query OK, 0 rows affected (0.23 sec)
+
+mysql> desc EMPLOYEE;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| emp_id    | int(20)     | NO   | PRI | NULL    |       |
+| emp_name  | varchar(50) | NO   |     | NULL    |       |
+| emp_add   | varchar(50) | NO   |     | NULL    |       |
+| emp_phone | varchar(50) | NO   |     | NULL    |       |
+| dept_id   | varchar(50) | NO   |     | NULL    |       |
+| dept_name | varchar(50) | NO   |     | NULL    |       |
+| salary    | int(50)     | NO   |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> insert into EMPLOYEE values(1,'Ramesh','GNoida','9876543123','0056','sales',60000);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into EMPLOYEE values(2,'Suresh','GNoida','9878532312','0072','sales',75000);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into EMPLOYEE values(3,'Rajesh','GNoida','9065325834','2324','sales',28000);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into EMPLOYEE values(4,'Shyamu','BSB','8963829302','8883','sales',35000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into EMPLOYEE values(5,'Ramu','BSB','7845437823','74568','sales',96000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from EMPLOYEE;
++--------+----------+---------+------------+---------+-----------+--------+
+| emp_id | emp_name | emp_add | emp_phone  | dept_id | dept_name | salary |
++--------+----------+---------+------------+---------+-----------+--------+
+|      1 | Ramesh   | GNoida  | 9876543123 | 0056    | sales     |  60000 |
+|      2 | Suresh   | GNoida  | 9878532312 | 0072    | sales     |  75000 |
+|      3 | Rajesh   | GNoida  | 9065325834 | 2324    | sales     |  28000 |
+|      4 | Shyamu   | BSB     | 8963829302 | 8883    | sales     |  35000 |
+|      5 | Ramu     | BSB     | 7845437823 | 74568   | sales     |  96000 |
++--------+----------+---------+------------+---------+-----------+--------+
+5 rows in set (0.00 sec)
+
+mysql> create user 'xyz' identified by 'a11';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> grant all on AKASHDB to xyz;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show grants for xyz;
++----------------------------------------------------------+
+| Grants for xyz@%                                         |
++----------------------------------------------------------+
+| GRANT USAGE ON *.* TO 'xyz'@'%'                          |
+| GRANT ALL PRIVILEGES ON `AKASHDB`.`AKASHDB` TO 'xyz'@'%' |
++----------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> quit
+Bye
+lab2@lab2-OptiPlex-380:~$ mysql -u xyz -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 6
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use AKASHDB;
+Database changed
+mysql> select * from EMPLOYEE;
+ERROR 1142 (42000): SELECT command denied to user 'xyz'@'localhost' for table 'EMPLOYEE'
+mysql> use databases;
+ERROR 1044 (42000): Access denied for user 'xyz'@'%' to database 'databases'
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| AKASHDB            |
++--------------------+
+2 rows in set (0.00 sec)
+
+mysql> quit
+Bye
+lab2@lab2-OptiPlex-380:~$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 7
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> grant all on EMPLOYEE to xyz;
+ERROR 1046 (3D000): No database selected
+mysql> use AKASHDB;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> grant all on EMPLOYEE to xyz;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> exit
+Bye
+lab2@lab2-OptiPlex-380:~$ mysql -u xyz -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use AKASHDB;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select * from EMPLOYEE;
++--------+----------+---------+------------+---------+-----------+--------+
+| emp_id | emp_name | emp_add | emp_phone  | dept_id | dept_name | salary |
++--------+----------+---------+------------+---------+-----------+--------+
+|      1 | Ramesh   | GNoida  | 9876543123 | 0056    | sales     |  60000 |
+|      2 | Suresh   | GNoida  | 9878532312 | 0072    | sales     |  75000 |
+|      3 | Rajesh   | GNoida  | 9065325834 | 2324    | sales     |  28000 |
+|      4 | Shyamu   | BSB     | 8963829302 | 8883    | sales     |  35000 |
+|      5 | Ramu     | BSB     | 7845437823 | 74568   | sales     |  96000 |
++--------+----------+---------+------------+---------+-----------+--------+
+5 rows in set (0.00 sec)
+
+mysql> update EMPLOYEE set emp_name = 'antony' where emp_id = 5;
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from EMPLOYEE;
++--------+----------+---------+------------+---------+-----------+--------+
+| emp_id | emp_name | emp_add | emp_phone  | dept_id | dept_name | salary |
++--------+----------+---------+------------+---------+-----------+--------+
+|      1 | Ramesh   | GNoida  | 9876543123 | 0056    | sales     |  60000 |
+|      2 | Suresh   | GNoida  | 9878532312 | 0072    | sales     |  75000 |
+|      3 | Rajesh   | GNoida  | 9065325834 | 2324    | sales     |  28000 |
+|      4 | Shyamu   | BSB     | 8963829302 | 8883    | sales     |  35000 |
+|      5 | antony   | BSB     | 7845437823 | 74568   | sales     |  96000 |
++--------+----------+---------+------------+---------+-----------+--------+
+5 rows in set (0.00 sec)
+
+mysql> quit
+Bye
+lab2@lab2-OptiPlex-380:~$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use AKASHDB;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> revoke all on AKASHDB from xyz;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> exit;
+Bye
+lab2@lab2-OptiPlex-380:~$ mysql -u xyz -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use AKASHDB;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_AKASHDB |
++-------------------+
+| EMPLOYEE          |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from EMPLOYEE;
++--------+----------+---------+------------+---------+-----------+--------+
+| emp_id | emp_name | emp_add | emp_phone  | dept_id | dept_name | salary |
++--------+----------+---------+------------+---------+-----------+--------+
+|      1 | Ramesh   | GNoida  | 9876543123 | 0056    | sales     |  60000 |
+|      2 | Suresh   | GNoida  | 9878532312 | 0072    | sales     |  75000 |
+|      3 | Rajesh   | GNoida  | 9065325834 | 2324    | sales     |  28000 |
+|      4 | Shyamu   | BSB     | 8963829302 | 8883    | sales     |  35000 |
+|      5 | antony   | BSB     | 7845437823 | 74568   | sales     |  96000 |
++--------+----------+---------+------------+---------+-----------+--------+
+5 rows in set (0.00 sec)
+
+mysql> exit
+Bye
+lab2@lab2-OptiPlex-380:~$ mysql -u root -p
+Enter password: 
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+lab2@lab2-OptiPlex-380:~$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 12
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use AKASHDB;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> revoke all on EMPLOYEE from xyz;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> exit
+Bye
+lab2@lab2-OptiPlex-380:~$ mysql -u xyz -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use AKASHDB;
+ERROR 1044 (42000): Access denied for user 'xyz'@'%' to database 'AKASHDB'
+

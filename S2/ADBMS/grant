@@ -1,0 +1,4 @@
+create user 'akash' identified by '1234';
+show grants for akash;
+grant all on AKASHDB.* to akash;
+revoke all on AKASHDB.* from akash1;

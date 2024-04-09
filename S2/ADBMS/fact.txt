@@ -1,0 +1,37 @@
+delimiter //
+ create procedure f(in n int)
+     begin
+     declare f int default 1;
+     while n  > 0 do
+     set f=f*n;
+     set n=n-1;
+     end while;
+     select concat('fact=',f) as result;
+     end //
+
+
+delimiter //
+ create procedure larg(in a int,in b int,in c int)
+     begin
+     if a > b and a > c then
+     select concat(a,' is largest') as result;
+     elseif b > c then
+     select concat(b,' is largest') as result;
+     else
+    select concat(c,' is largest') as result;
+     end if;
+     end //
+     
+     
+     
+     delimiter //
+ create procedure fac(in n int)
+     begin
+     declare i int ;
+     for i in.. n do
+     set f=f*n;
+     
+     end for;
+     select concat('fact=',f) as result;
+     end //
+
